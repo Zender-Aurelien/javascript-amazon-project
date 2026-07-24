@@ -40,7 +40,7 @@ cart.forEach((cartItem) =>{
                   <span class="update-quantity-link link-primary js-update-quantity-link" data-product-id="${matchingProduct.id}">
                     Update
                   </span>
-                  <input class="quantity-input js-quantity-input-${matchingProduct.id}">
+                  <input class="quantity-input js-quantity-input-${matchingProduct.id}" data-product-id="${matchingProduct.id}">
                   <span class="save-quantity-link link-primary js-save-quantity-link" data-product-id="${matchingProduct.id}">Save</span>
                   <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">
                     Delete
@@ -131,20 +131,29 @@ document.querySelectorAll('.js-save-quantity-link').forEach((link) =>{
     link.addEventListener('click', ()=>{
         const productId=link.dataset.productId;
         const container=document.querySelector(`.js-cart-item-container-${productId}`);
-        container.classList.remove('is-editing-quantity');
 
-        const quantityInput=document.querySelector(`.js-quantity-input-${productId}`);
-        const newQuantity= Number(quantityInput.value);
         
-        updateQuantity(productId,newQuantity);
+        const quantityInput=document.querySelector(`.js-quantity-input-${productId}`);
+        
+        const newQuantity= Number(quantityInput.value);
+        if(newQuantity>=0 && newQuantity<1000){
+            container.classList.remove('is-editing-quantity');
+            if(newQuantity==0){
+                removeFromCart(productId);
+                container.remove();
+                updateCartQuantity();
+            }else{
+                updateQuantity(productId,newQuantity);
 
-        const quantityLabel=document.querySelector(`.js-quantity-label-${productId}`);
-        quantityLabel.innerHTML=newQuantity;
-        updateCartQuantity();
+                const quantityLabel=document.querySelector(`.js-quantity-label-${productId}`);
+                quantityLabel.innerHTML=newQuantity;
+                updateCartQuantity();
+            }
+        }else{
+            alert('Quantity must be at least 0 and less than 1000');
+        }
     });
 });
-
-
 
 updateCartQuantity();
 
