@@ -5,6 +5,7 @@ import {hello} from'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import {deliveryOptions,getDeliveryOption} from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
+import { renderCheckoutHeader } from './checkoutHeader.js';
 
 export function renderOrderSummary(){
 
@@ -122,8 +123,8 @@ export function renderOrderSummary(){
 
 
     function updateCartQuantity(){
-    let cartQuantity=calculateCartQuantity();
-    document.querySelector('.js-return-to-home-link').innerHTML=`${cartQuantity} items`;
+        let cartQuantity=calculateCartQuantity();
+        document.querySelector('.js-return-to-home-link').innerHTML=`${cartQuantity} items`;
     }
 
     document.querySelectorAll('.js-delete-link').forEach((link)=>{
@@ -131,10 +132,9 @@ export function renderOrderSummary(){
             const productId=link.dataset.productId;
             removeFromCart(productId);     
             
-            const container= document.querySelector(`.js-cart-item-container-${productId}`);
-
-            container.remove();
+            renderOrderSummary();
             renderPaymentSummary();
+            renderCheckoutHeader();
             
         })
     });
@@ -161,14 +161,17 @@ export function renderOrderSummary(){
                 container.classList.remove('is-editing-quantity');
                 if(newQuantity==0){
                     removeFromCart(productId);
-                    container.remove();
-                    updateCartQuantity();
+                    renderOrderSummary();
+                    renderPaymentSummary();
+                    renderCheckoutHeader();
                 }else{
                     updateQuantity(productId,newQuantity);
 
                     const quantityLabel=document.querySelector(`.js-quantity-label-${productId}`);
                     quantityLabel.innerHTML=newQuantity;
-                    updateCartQuantity();
+                    renderOrderSummary();
+                    renderPaymentSummary();
+                    renderCheckoutHeader();
                 }
             }else{
                 alert('Quantity must be at least 0 and less than 1000');
@@ -176,5 +179,4 @@ export function renderOrderSummary(){
         });
     });
 
-    updateCartQuantity();
 }
