@@ -1,4 +1,4 @@
-import formatCurrency from "../scripts/utils/money.js";
+import formatCurrency from "../../scripts/utils/money.js";
 
 console.log('test_suite: formatCurrency');
 
@@ -19,6 +19,19 @@ if(formatCurrency(0)==='0.00'){
 console.log('rounds up');
 if(formatCurrency(2000.5)==='20.01'){
     console.log('passed');
+}else{
+    console.log('fail');
+}
+console.log('rounds down');
+if(formatCurrency(2000.4)==='20.00'){
+    console.log('passed');
+}else{
+    console.log('fail');
+}
+
+console.log('handle negative');
+if(formatCurrency(-2000)==='0.00'){
+    console.log('pass');
 }else{
     console.log('fail');
 }
