@@ -57,6 +57,32 @@ class Clothing extends Product{
   }
 }
 
+
+// const date=new Date();
+// console.log(date);
+// console.log(date.toLocaleTimeString());
+
+
+// console.log(this);
+
+// const obj2={
+//   a: 2,
+//   b: this.a // b will return undefined bc object hasnt been created yet
+// };
+
+// function logThis(){
+//   console.log(this); //will return undefined
+// }
+// logThis();
+
+// logThis.call('hello');// .call() converts 'this' keyword into whatever you want
+
+// const obj3={
+//   method: () =>{
+//     console.log(this); //arrow functions do not change value of this, so this will return undefined
+//   }
+// };
+
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
