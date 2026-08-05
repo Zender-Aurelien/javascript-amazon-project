@@ -1,6 +1,6 @@
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 import { loadFromStorage,cart } from "../../data/cart.js";
-import { loadProducts } from "../../data/products.js";
+import { loadProducts, loadProductsFetch } from "../../data/products.js";
 
 describe('test suite: renderOrderSummary', () =>{
     const productId1='e43638ce-6aa0-4b85-b27f-e1d07eb678c6';
@@ -8,7 +8,7 @@ describe('test suite: renderOrderSummary', () =>{
     //beforeEach is a hook that runs code b4 each test, afterEach does it after, beforeAll runs code b4 ALL tests, afterAll does it after
 
     beforeAll((done) =>{ //done() lets us control when jasmine goes to next step
-        loadProducts(() =>{
+        loadProductsFetch().then(()=>{
             done();
         });
     });
