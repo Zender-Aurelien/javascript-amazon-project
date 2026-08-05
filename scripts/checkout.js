@@ -12,14 +12,25 @@ import { loadCart } from "../data/cart.js";
 //async await is a shortcut for promises
 //async keyword makes a function return a promise
 //await waits for a promise to finish before going to next line
+
+//try catch works with synchronous code too
 async function loadPage(){
-    await loadProductsFetch(); //await basically replaces .then()
+    try{
+        //throw 'error1'; 
+
+        await loadProductsFetch(); //await basically replaces .then()
     //closest function has to be async, so await cannot be nested in a regular function that is nested inside an async
-    const value = await new Promise((resolve) =>{
-        loadCart(() =>{
-            resolve('value3'); //saves resolve value to variable
-        });
-    })
+        const value = await new Promise((resolve,reject) =>{
+            // throw 'error2';
+            loadCart(() =>{
+                // reject('error3'); //reject creates error in the future(asynchronously)
+                resolve('value3'); //saves resolve value to variable
+            });
+        })
+    } catch(error){
+        console.log('Unexpected error. Please try again later.');
+    }
+    
 
     renderOrderSummary();
     renderPaymentSummary();
